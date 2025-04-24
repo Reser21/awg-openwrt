@@ -2,8 +2,8 @@ name: Create Release on Tag
 # on: [workflow_dispatch]
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -31,8 +31,7 @@ jobs:
         run: |
             apt-get update
             apt-get install -y gawk build-essential git wget curl unzip \
-            libncurses5-dev zlib1g-dev flex gettext libssl-dev \
-            python2-dev python-is-python2
+            libncurses5-dev zlib1g-dev flex gettext libssl-dev
   
     
       - name: Cache Tools and Kernel
