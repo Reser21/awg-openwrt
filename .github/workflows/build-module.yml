@@ -2,8 +2,8 @@ name: Create Release on Tag
 # on: [workflow_dispatch]
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches:
+      - master
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
             target: ramips
             subtarget: mt76x8
             vermagic: "af9771cc6126bb2b33f0a5956974c0df"
-
+  
     steps:
       - uses: actions/checkout@v4
         with:
@@ -27,6 +27,14 @@ jobs:
           ref: v${{ matrix.build_env.tag }}
           fetch-depth: 0
 
+      - name: Install dependencies
+        run: |
+            apt-get update
+            apt-get install -y gawk build-essential git wget curl unzip \
+            libncurses5-dev zlib1g-dev flex gettext libssl-dev \
+            python2-dev python-is-python2
+  
+    
       - name: Cache Tools and Kernel
         id: cache-tools-kernel
         uses: actions/cache@v4
